@@ -1,0 +1,14 @@
+-rwsr-xr-x root root    70504 /usr/bin/chage
+-rws--x--x root root    32280 /usr/bin/chfn
+-rws--x--x root root    28112 /usr/bin/chsh
+-rwsr-xr-x root root    40536 /usr/bin/fusermount3
+-rwsr-xr-x root root    74128 /usr/bin/gpasswd
+-rwsr-xr-x root root    19640 /usr/bin/grub2-set-bootflag
+-rwsr-xr-x root root    48776 /usr/bin/mount
+-rwsr-xr-x root root    38128 /usr/bin/newgrp
+-rwsr-xr-x root root    19808 /usr/bin/pam_timestamp_check
+-rwsr-xr-x root root    91536 /usr/bin/passwd
+-rwsr-xr-x root root    57240 /usr/bin/su
+---s--x--x root root   215152 /usr/bin/sudo
+-rwsr-xr-x root root    36424 /usr/bin/umount
+-rwsr-xr-x root root    28192 /usr/bin/unix_chkpwd

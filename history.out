@@ -1,0 +1,53 @@
+    1  hostnamectl | head -6
+    2  cat /etc/os-release | head -3
+    3  uname -r
+    4  whoami; id
+    5  sudo groupadd students
+    6  sudo useradd -u 1234 -m -s /bin/bash -c "user1" user1
+    7  sudo usermod -aG students user1
+    8  sudo chpasswd <<< 'user1:user1Pass!26'
+    9  sudo chage -M 90 -W 14 user1
+   10  id user1
+   11  getent passwd user1
+   12  getent group students
+   13  sudo chage -l user1
+   14  stat /home/user1
+   15  sudo find / -xdev -type f -perm -4000 -printf '%M %u %g %8s %p\n' 2>/dev/null | sort -k5 > ~/suid_files.out
+   16  cat ~/suid_files.out
+   17  wc -l ~/suid_files.out
+   18  ps -eo pid,ppid,ruid,user,euid,cmd | awk 'NR==1 || ($3 != 0 && $5 == 0)' > ~/privileged_procs.out
+   19  cat ~/privileged_procs.out
+   20  mkdir -p ~/suid-lab ~/cap-lab
+   21  cp /usr/bin/cat ~/suid-lab/cat
+   22  sudo chown root:root ~/suid-lab/cat
+   23  sudo chmod u+s ~/suid-lab/cat
+   24  ls -l ~/suid-lab/cat
+   25  sudo -u user1 bash -lc '/home/igolnikovsa/suid-lab/cat /etc/shadow'
+   26  sudo chmod 755 /home/igolnikovsa
+   27  sudo -u user1 bash -lc '/home/igolnikovsa/suid-lab/cat /etc/shadow' | head -3
+   28  sudo -u user1 bash -lc 'cat /etc/shadow' 2>&1 | head -3
+   29  cp /usr/bin/chown ~/cap-lab/chown
+   30  sudo chown root:root ~/cap-lab/chown
+   31  sudo setcap cap_chown+ep ~/cap-lab/chown
+   32  getcap ~/suid-lab/cat ~/cap-lab/chown
+   33  sudo -u user1 bash -lc 'touch /tmp/cap-demo.txt; chmod 664 /tmp/cap-demo.txt; ls -l /tmp/cap-demo.txt'
+   34  sudo -u user1 bash -lc 'chown root /tmp/cap-demo.txt' 2>&1
+   35  sudo -u user1 bash -lc '/home/igolnikovsa/cap-lab/chown root /tmp/cap-demo.txt'
+   36  sudo -u user1 bash -lc 'ls -l /tmp/cap-demo.txt'
+   37  echo 'user1 ALL=(root) /usr/bin/date, /usr/bin/timedatectl' | sudo tee -a /etc/sudoers
+   38  sudo visudo -c
+   39  sudo -l -U user1
+   40  sudo -u user1 bash -lc 'sudo date -s "2026-11-16 20:15:00"'
+   41  date
+   42  mkdir -p ~/artifacts/etc
+   43  sudo cp /etc/passwd /etc/group ~/artifacts/etc/
+   44  sudo cp /etc/sudoers ~/artifacts/etc/
+   45  sudo cat /etc/shadow > ~/artifacts/etc/shadow
+   46  sudo chown igolnikovsa:igolnikovsa ~/artifacts/etc/*
+   47  ls -l ~/artifacts/etc
+   48  stat /home/user1 > ~/stat.out
+   49  stat /home/igolnikovsa/suid-lab/cat >> ~/stat.out
+   50  stat /home/igolnikovsa/cap-lab/chown >> ~/stat.out
+   51  getcap /home/igolnikovsa/suid-lab/cat /home/igolnikovsa/cap-lab/chown > ~/getcap.out
+   52  cat ~/getcap.out
+   53  history > ~/history.out
